@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5p | [%thread] %logger{5}:%L - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logFile.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5p | [%thread] %logger{5}:%L - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.experts.core.biller.statemachine.api" level="DEBUG"/>
+
+    <logger name="com.experts.core.biller.statemachine.api" level="INFO"/>
+
+    <logger name="com.experts.core.biller.statemachine.api" level="TRACE"/>
+
+    <logger name="org.springframework.core" level="DEBUG"/>
+    <logger name="org.springframework.statemachine" level="DEBUG"/>
+    <logger name="org.springframework.security" level="DEBUG"/>
+    <logger name="org.opensaml.security" level="DEBUG"></logger>
+
+    <logger name="org.springframework" level="DEBUG"></logger>
+    <logger name="org.springframework.boot" level="DEBUG"></logger>
+    <logger name="org.springframework.ws" level="DEBUG"></logger>
+
+
+    <logger name="org.jasig.cas" level="DEBUG"></logger>
+
+
+    <logger name="org.hibernate" level="DEBUG"/>
+
+    <appender name="TCP" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>localhost:5044</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>
