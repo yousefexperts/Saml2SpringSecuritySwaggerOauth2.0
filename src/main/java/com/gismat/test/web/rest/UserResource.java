@@ -45,15 +45,10 @@ public class UserResource {
     @Autowired
     private  UserRepository userRepository;
 
-
-
     @Autowired
     private  UserServiceSelection userServiceSelection;
 
-
-
     @PostMapping("/users")
-    @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
         log.debug("REST request to save User : {}", managedUserVM);
@@ -74,9 +69,7 @@ public class UserResource {
         }
     }
 
-
     @PutMapping("/users")
-    @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<User> updateUser(@Valid @RequestBody ManagedUserVM managedUserVM) {
         log.debug("REST request to update User : {}", managedUserVM);
@@ -95,7 +88,6 @@ public class UserResource {
 
 
     @GetMapping("/users")
-    @Timed
     public ResponseEntity<List<User>> getAllUsers(@ApiParam Pageable pageable) {
         final Page<User> page = userRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
@@ -103,7 +95,6 @@ public class UserResource {
     }
 
     @GetMapping("/users/authorities")
-    @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public Set<Authority> getAuthorities() {
         User user = userRepository.findByLogin("admin");
@@ -111,7 +102,6 @@ public class UserResource {
     }
 
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
-    @Timed
     public ResponseEntity<User> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
         User users = userRepository.findByLogin(login);
@@ -121,7 +111,6 @@ public class UserResource {
 
 
     @DeleteMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
-    @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);

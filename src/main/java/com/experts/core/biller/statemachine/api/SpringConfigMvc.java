@@ -170,7 +170,7 @@ public class SpringConfigMvc extends WebMvcConfigurerAdapter {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("BillPullResponse");
         wsdl11Definition.setLocationUri("/billpull");
-        wsdl11Definition.setTargetNamespace("http://192.168.10.230:3070/ws/billpull");
+        wsdl11Definition.setTargetNamespace("http://192.168.1:107:8070/ws/billpull");
         wsdl11Definition.setSchema(billpull);
         wsdl11Definition.setCreateSoap11Binding(true);
         return wsdl11Definition;
@@ -183,7 +183,7 @@ public class SpringConfigMvc extends WebMvcConfigurerAdapter {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("NotificationRequest");
         wsdl11Definition.setLocationUri("/notifaction");
-        wsdl11Definition.setTargetNamespace("http://localhost:3070/ws/notifaction");
+        wsdl11Definition.setTargetNamespace("http://192.168.1:107:8070/ws/notifaction");
         wsdl11Definition.setSchema(notification);
 
         return wsdl11Definition;
@@ -195,7 +195,7 @@ public class SpringConfigMvc extends WebMvcConfigurerAdapter {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("PrePaidRequest");
         wsdl11Definition.setLocationUri("/prepaid");
-        wsdl11Definition.setTargetNamespace("http://localhost:3070/ws/prepaid");
+        wsdl11Definition.setTargetNamespace("http://192.168.1:107:8070/ws/prepaid");
         wsdl11Definition.setSchema(prepaid);
 
         return wsdl11Definition;
@@ -208,7 +208,7 @@ public class SpringConfigMvc extends WebMvcConfigurerAdapter {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("PaymentRequest");
         wsdl11Definition.setLocationUri("/payment");
-        wsdl11Definition.setTargetNamespace("http://localhost:3070/ws/payment");
+        wsdl11Definition.setTargetNamespace("http://192.168.1:107:8070/ws/payment");
         wsdl11Definition.setSchema(payment);
 
         return wsdl11Definition;
@@ -220,7 +220,7 @@ public class SpringConfigMvc extends WebMvcConfigurerAdapter {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("InquiryRequest");
         wsdl11Definition.setLocationUri("/inquiry");
-        wsdl11Definition.setTargetNamespace("http://localhost:3070/ws/inquiry");
+        wsdl11Definition.setTargetNamespace("http://192.168.1:107:8070/ws/inquiry");
         wsdl11Definition.setSchema(inquiry);
         wsdl11Definition.setCreateSoap11Binding(true);
         return wsdl11Definition;

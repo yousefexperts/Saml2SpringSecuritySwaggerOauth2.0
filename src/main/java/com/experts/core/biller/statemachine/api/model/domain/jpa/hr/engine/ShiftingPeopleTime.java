@@ -1,6 +1,7 @@
 package com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine;
 
 
+import com.experts.core.biller.statemachine.api.model.domain.jpa.AbstractEntity;
 import com.experts.core.biller.statemachine.api.model.domain.jpa.UsersCore;
 import com.experts.core.biller.statemachine.api.model.domain.jpa.hr.Person;
 import lombok.AllArgsConstructor;
@@ -19,18 +20,14 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name  = "store_people_shifting_time")
+@Table(name  = "shifting_time")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL , region = "com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.ShiftingPeopleTime")
-public class ShiftingPeopleTime  implements Serializable {
+public class ShiftingPeopleTime extends AbstractEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name="uuid", strategy="uuid2")
-    private UUID id;
 
 
     @ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
@@ -61,67 +58,4 @@ public class ShiftingPeopleTime  implements Serializable {
     private int version;
 
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public ShiftingTime getTimes() {
-        return times;
-    }
-
-    public void setTimes(ShiftingTime times) {
-        this.times = times;
-    }
-
-    public Person getPersons() {
-        return persons;
-    }
-
-    public void setPersons(Person persons) {
-        this.persons = persons;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public UsersCore getUsersCore() {
-        return usersCore;
-    }
-
-    public void setUsersCore(UsersCore usersCore) {
-        this.usersCore = usersCore;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
 }

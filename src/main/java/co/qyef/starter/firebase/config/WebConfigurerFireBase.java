@@ -18,9 +18,6 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Configuration of web application with Servlet 3.0 APIs.
- */
 @Configuration
 public class WebConfigurerFireBase implements ServletContextInitializer {
 
@@ -28,8 +25,6 @@ public class WebConfigurerFireBase implements ServletContextInitializer {
 
     @Inject
     private Environment env;
-
-
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
@@ -44,9 +39,6 @@ public class WebConfigurerFireBase implements ServletContextInitializer {
         log.info("Web application fully configured");
     }
 
-    /**
-     * Initializes the GZip filter.
-     */
     private void initGzipFilter(ServletContext servletContext, EnumSet<DispatcherType> disps) {
         log.debug("Registering GZip Filter");
         FilterRegistration.Dynamic compressingFilter = servletContext.addFilter("gzipFilter", new co.qyef.starter.firebase.qzip.GZipServletFilter());
@@ -61,9 +53,7 @@ public class WebConfigurerFireBase implements ServletContextInitializer {
         compressingFilter.setAsyncSupported(true);
     }
 
-    /**
-     * Initializes the static resources production Filter.
-     */
+
     private void initStaticResourcesProductionFilter(ServletContext servletContext,
                                                      EnumSet<DispatcherType> disps) {
 
@@ -82,9 +72,7 @@ public class WebConfigurerFireBase implements ServletContextInitializer {
         staticResourcesProductionFilter.setAsyncSupported(true);
     }
 
-    /**
-     * Initializes the cachig HTTP Headers Filter.
-     */
+
     private void initCachingHttpHeadersFilter(ServletContext servletContext,
                                               EnumSet<DispatcherType> disps) {
         log.debug("Registering Cachig HTTP Headers Filter");

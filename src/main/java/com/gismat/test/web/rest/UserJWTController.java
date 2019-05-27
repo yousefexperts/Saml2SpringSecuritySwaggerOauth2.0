@@ -40,7 +40,6 @@ public class UserJWTController {
     }
 
     @PostMapping("/authenticate")
-    @Timed
     public ResponseEntity authorize(@RequestBody LoginVM loginVM, HttpServletResponse response) {
         UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
@@ -60,7 +59,6 @@ public class UserJWTController {
     }
 
     @PostMapping("/firebaseauthenticate")
-    @Timed
     public ResponseEntity firebaseAuthorize(){
         try {
             System.out.println("on success auth runned");
@@ -73,12 +71,6 @@ public class UserJWTController {
         }
     }
 
-
-
-
-    /**
-     * Object to return as body in JWT Authentication.
-     */
     static class JWTToken {
 
         private String idToken;

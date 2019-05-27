@@ -1,5 +1,6 @@
 package com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine;
 
+import com.experts.core.biller.statemachine.api.model.domain.jpa.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,12 +20,8 @@ import java.util.UUID;
 @Data
 @Builder
 @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL , region = "com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine..SubCatogery")
-public class SubCatogery implements Serializable {
+public class SubCatogery extends AbstractEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name="uuid", strategy="uuid2")
-    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     @JoinColumn(name= "parent_id" , nullable = false)
@@ -34,27 +31,4 @@ public class SubCatogery implements Serializable {
     private int version;
 
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Catogery getParents() {
-        return parents;
-    }
-
-    public void setParents(Catogery parents) {
-        this.parents = parents;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
 }

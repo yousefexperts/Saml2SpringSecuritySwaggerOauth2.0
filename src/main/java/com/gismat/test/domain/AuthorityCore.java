@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 
 @Entity
-@Table(name = "jhi_authority")
+@Table(name = "qyef_authority")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class AuthorityCore implements Serializable,GrantedAuthority {
 

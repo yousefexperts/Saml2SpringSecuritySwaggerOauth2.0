@@ -13,8 +13,6 @@ import javax.sql.DataSource;
 @Import({ DatabaseConfigurationStarter.class} )
 public class JHipsterHealthIndicatorConfiguration {
 
-
-
     @Autowired
     private DataSource dataSource;
 

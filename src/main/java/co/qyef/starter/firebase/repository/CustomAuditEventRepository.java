@@ -19,7 +19,7 @@ public class CustomAuditEventRepository extends  InMemoryAuditEventRepository {
     @Autowired
     private PersistenceAuditEventRepository persistenceAuditEventRepository;
 
-    @Inject
+    @Autowired
     private AuditEventConverterFireBase auditEventConverterFireBase;
 
 

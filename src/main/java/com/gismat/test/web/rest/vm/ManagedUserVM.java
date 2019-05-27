@@ -6,6 +6,7 @@ import com.gismat.test.service.dto.UserDTO;
 import javax.validation.constraints.Size;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Set;
 
 public class ManagedUserVM extends UserDTO {
@@ -18,10 +19,10 @@ public class ManagedUserVM extends UserDTO {
     private String password;
 
 
-    public ManagedUserVM(Long id, String login, String password, String firstName, String lastName,
+    public ManagedUserVM(String id, String login, String password, String firstName, String lastName,
                          String email, boolean activated, String imageUrl, String langKey,
-                         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-                        Set<String> authorities) {
+                         String createdBy, LocalDate createdDate, String lastModifiedBy, LocalDate lastModifiedDate,
+                         Set<String> authorities) {
 
         super(id, login, firstName, lastName, email, activated, imageUrl, langKey, createdBy, createdDate, lastModifiedBy, lastModifiedDate,  authorities);
         this.password = password;

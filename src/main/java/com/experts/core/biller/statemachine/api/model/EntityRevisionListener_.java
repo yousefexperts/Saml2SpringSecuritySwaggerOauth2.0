@@ -39,7 +39,7 @@ public class EntityRevisionListener_ implements org.hibernate.envers.EntityTrack
     @Override
     public void entityChanged(@SuppressWarnings("rawtypes") Class entityClass, String entityName, Serializable entityId, RevisionType revisionType, Object revisionEntity) {
         CustomTrackingEntity revision = (CustomTrackingEntity) revisionEntity;
-        revision.setId(revision.getCustomId());
+
         revision.setEntityName(((CustomTrackingEntity) revisionEntity).getEntityName());
         Auditable auditable = null;
        // persistenceManagerHibernate.getSession().accessTransaction().begin();

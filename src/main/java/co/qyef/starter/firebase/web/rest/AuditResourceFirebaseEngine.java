@@ -29,19 +29,16 @@ public class AuditResourceFirebaseEngine {
         binder.registerCustomEditor(LocalDateTime.class, new LocaleDateTimeEditor("yyyy-MM-dd", false));
     }
 
-    @RequestMapping(value = "/rest/audits/all",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/rest/audits/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @RolesAllowed(AuthoritiesConstants.ADMIN)
     public List<AuditEvent> findAll(Pageable page) {
         return auditEventServiceFireBase.findAll(page).getContent();
     }
 
-    @RequestMapping(value = "/rest/audits/byDates",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/rest/audits/byDates", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @RolesAllowed(AuthoritiesConstants.ADMIN)
     public List<AuditEvent> findByDates(@RequestParam(value = "fromDate") LocalDate fromDate, @RequestParam(value = "toDate") LocalDate toDate , Pageable page) {
         return auditEventServiceFireBase.findByDates(fromDate, toDate , page).getContent();
     }
+
 }

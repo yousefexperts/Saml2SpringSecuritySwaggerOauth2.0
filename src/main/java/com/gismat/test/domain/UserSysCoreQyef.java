@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
 import org.joda.time.LocalDateTime;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,16 +25,16 @@ import java.util.*;
 
 
 @Entity
-@Table(name = "jhi_user")
+@Table(name = "qyef_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserSysCoreDll extends AbstractAuditingEntityCore implements Serializable,UserDetails {
+public class UserSysCoreQyef extends AbstractAuditingEntityCore implements Serializable,UserDetails {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -102,26 +103,7 @@ public class UserSysCoreDll extends AbstractAuditingEntityCore implements Serial
     @BatchSize(size = 20)
     private Set<AuthorityCore> authorities = new HashSet<>();
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    //Lowercase the login before saving it in database
-    public void setLogin(String login) {
-        this.login = StringUtils.lowerCase(login, Locale.ENGLISH);
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
     @Override
     public String getPassword() {
@@ -164,8 +146,8 @@ public class UserSysCoreDll extends AbstractAuditingEntityCore implements Serial
             return false;
         }
 
-        UserSysCoreDll userSysCoreDll = (UserSysCoreDll) o;
-        return !(userSysCoreDll.getId() == null || getId() == null) && Objects.equals(getId(), userSysCoreDll.getId());
+        UserSysCoreQyef userSysCoreQyef = (UserSysCoreQyef) o;
+        return !(userSysCoreQyef.getId() == null || getId() == null) && Objects.equals(getId(), userSysCoreQyef.getId());
     }
 
 
@@ -188,95 +170,5 @@ public class UserSysCoreDll extends AbstractAuditingEntityCore implements Serial
             "}";
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public boolean isActivated() {
-        return activated;
-    }
-
-    public void setActivated(boolean activated) {
-        this.activated = activated;
-    }
-
-    public String getLangKey() {
-        return langKey;
-    }
-
-    public void setLangKey(String langKey) {
-        this.langKey = langKey;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getActivationKey() {
-        return activationKey;
-    }
-
-    public void setActivationKey(String activationKey) {
-        this.activationKey = activationKey;
-    }
-
-    public String getResetKey() {
-        return resetKey;
-    }
-
-    public void setResetKey(String resetKey) {
-        this.resetKey = resetKey;
-    }
-
-    public LocalDateTime getResetDate() {
-        return resetDate;
-    }
-
-    public void setResetDate(LocalDateTime resetDate) {
-        this.resetDate = resetDate;
-    }
-
-    public Set<AuthorityCore> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(Set<AuthorityCore> authorities) {
-        this.authorities = authorities;
-    }
 }

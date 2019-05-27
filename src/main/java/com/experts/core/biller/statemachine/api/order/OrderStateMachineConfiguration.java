@@ -11,6 +11,7 @@ import org.springframework.aop.target.CommonsPool2TargetSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.*;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.messaging.Message;
@@ -183,8 +184,9 @@ public class OrderStateMachineConfiguration extends EnumStateMachineConfigurerAd
 
 
 
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
+    @Bean(name = "stateMachineRedis")
+    @Order(-1000)
+    public RedisConnectionFactory stateMachineRedis() {
         return new JedisConnectionFactory();
     }
 
@@ -194,9 +196,9 @@ public class OrderStateMachineConfiguration extends EnumStateMachineConfigurerAd
     }
 
     @Bean
-    public StateMachinePersist<States, Events, String> stateMachinePersist(RedisConnectionFactory connectionFactory) {
+    public StateMachinePersist<States, Events, String> stateMachinePersist(RedisConnectionFactory stateMachineRedis) {
         RedisStateMachineContextRepository<States, Events> repository =
-                new RedisStateMachineContextRepository<States, Events>(connectionFactory);
+                new RedisStateMachineContextRepository<States, Events>(stateMachineRedis);
         return new RepositoryStateMachinePersist<States, Events>(repository) {};
     }
 

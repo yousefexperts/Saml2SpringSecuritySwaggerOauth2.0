@@ -48,13 +48,6 @@ import javax.sql.DataSource;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-
-    @Value("${app.service-principal}")
-    private String servicePrincipal;
-
-    @Value("${app.keytab-location}")
-    private String keytabLocation;
-
     @Autowired
     private DataSource dataSource;
 
@@ -79,13 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        final FirebaseBasicAuthenticationFilter firebaseBasicAuthenticationFilter=new FirebaseBasicAuthenticationFilter(this.authenticationManager(),tokenProvider);
-        http.addFilterBefore(tokenAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
-            .addFilter(firebaseBasicAuthenticationFilter)
-            .exceptionHandling()
-            .authenticationEntryPoint(problemSupport)
-            .accessDeniedHandler(problemSupport)
-            .and()
+
+        http
 
             .csrf().disable()
             .headers()
@@ -123,7 +111,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/core").authenticated()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/api/**").permitAll()
-                .antMatchers("/swagger-ui.html").permitAll()
+            .antMatchers("/static/**").permitAll()
+            .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/ws/**").permitAll()
                 .antMatchers("/ws/BillPullRequest/**").permitAll()
                 .antMatchers("/ws/NotificationRequest/**").permitAll()

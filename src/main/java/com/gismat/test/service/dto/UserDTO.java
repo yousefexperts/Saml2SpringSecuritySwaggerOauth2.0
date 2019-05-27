@@ -3,12 +3,12 @@ package com.gismat.test.service.dto;
 import co.qyef.starter.firebase.creator.Constants;
 
 import com.gismat.test.domain.AuthorityCore;
-import com.gismat.test.domain.UserSysCoreDll;
+import com.gismat.test.domain.UserSysCoreQyef;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.*;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class UserDTO {
 
-    private Long id;
+    private String id;
 
     @NotBlank
     @Pattern(regexp = Constants.LOGIN_REGEX)
@@ -43,27 +43,27 @@ public class UserDTO {
 
     private String createdBy;
 
-    private Instant createdDate;
+    private LocalDate createdDate;
 
     private String lastModifiedBy;
 
-    private Instant lastModifiedDate;
+    private LocalDate lastModifiedDate;
 
     private Set<String> authorities;
 
 
 
-    public UserDTO(UserSysCoreDll userSysCoreDll) {
-        this(userSysCoreDll.getId(), userSysCoreDll.getLogin(), userSysCoreDll.getFirstName(), userSysCoreDll.getLastName(),
-            userSysCoreDll.getEmail(), userSysCoreDll.isActivated(), userSysCoreDll.getImageUrl(), userSysCoreDll.getLangKey(),
-            userSysCoreDll.getCreatedBy(), userSysCoreDll.getCreatedDate(), userSysCoreDll.getLastModifiedBy(), userSysCoreDll.getLastModifiedDate(),
-            userSysCoreDll.getAuthorities().stream().map(AuthorityCore::getName)
+    public UserDTO(UserSysCoreQyef userSysCoreQyef) {
+        this(userSysCoreQyef.getId().toString(), userSysCoreQyef.getLogin(), userSysCoreQyef.getFirstName(), userSysCoreQyef.getLastName(),
+            userSysCoreQyef.getEmail(), userSysCoreQyef.isActivated(), userSysCoreQyef.getImageUrl(), userSysCoreQyef.getLangKey(),
+            userSysCoreQyef.getCreatedBy(), userSysCoreQyef.getCreatedDate(), userSysCoreQyef.getLastModifiedBy(), userSysCoreQyef.getLastModifiedDate(),
+            userSysCoreQyef.getAuthorities().stream().map(AuthorityCore::getName)
                 .collect(Collectors.toSet()));
     }
 
-    public UserDTO(Long id, String login, String firstName, String lastName,
+    public UserDTO(String id, String login, String firstName, String lastName,
         String email, boolean activated, String imageUrl, String langKey,
-        String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
+        String createdBy, LocalDate createdDate, String lastModifiedBy, LocalDate lastModifiedDate,
         Set<String> authorities) {
 
         this.id = id;
@@ -101,12 +101,20 @@ public class UserDTO {
             "}";
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public LocalDate getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(LocalDate lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public String getLogin() {
@@ -173,11 +181,11 @@ public class UserDTO {
         this.createdBy = createdBy;
     }
 
-    public Instant getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Instant createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -189,13 +197,7 @@ public class UserDTO {
         this.lastModifiedBy = lastModifiedBy;
     }
 
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
 
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
 
     public Set<String> getAuthorities() {
         return authorities;

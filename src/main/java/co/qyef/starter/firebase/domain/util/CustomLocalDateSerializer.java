@@ -9,9 +9,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.io.IOException;
 
-/**
- * Custom Jackson serializer for displaying Joda Time dates.
- */
+
 public class CustomLocalDateSerializer extends JsonSerializer<LocalDate> {
 
     private static DateTimeFormatter formatter =

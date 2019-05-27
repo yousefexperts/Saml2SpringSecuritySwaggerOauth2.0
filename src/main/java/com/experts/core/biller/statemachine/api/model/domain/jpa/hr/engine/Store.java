@@ -1,6 +1,7 @@
 package com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine;
 
 
+import com.experts.core.biller.statemachine.api.model.domain.jpa.AbstractEntity;
 import com.experts.core.biller.statemachine.api.model.domain.jpa.UsersCore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,13 +26,8 @@ import java.util.UUID;
 @Data
 @Builder
 @Cache(region = "com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.Store" , usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-public class Store implements Serializable {
+public class Store extends AbstractEntity implements Serializable {
 
-
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name="uuid", strategy="uuid2")
-    private UUID id;
 
     @Column(name  = "store_name" , nullable = false)
     private String storeName;

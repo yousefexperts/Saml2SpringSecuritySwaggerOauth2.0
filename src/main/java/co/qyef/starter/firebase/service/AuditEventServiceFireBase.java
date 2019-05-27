@@ -6,9 +6,11 @@ import co.qyef.starter.firebase.domain.PersistentAuditEvent;
 import co.qyef.starter.firebase.repository.PersistenceAuditEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.audit.AuditEvent;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +19,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-@Service
+@Service("auditEventServiceFireBase")
+@Component("auditEventServiceFireBase")
 @Transactional
 public class AuditEventServiceFireBase {
 

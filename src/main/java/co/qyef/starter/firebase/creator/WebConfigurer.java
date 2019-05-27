@@ -22,7 +22,6 @@ import javax.servlet.*;
 import java.nio.file.Paths;
 import java.util.EnumSet;
 
-/*import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;*/
 
 
 @Configuration
@@ -49,12 +48,12 @@ public class WebConfigurer implements ServletContextInitializer {
             log.info("Web application configuration, using profiles: {}", (Object[]) env.getActiveProfiles());
         }
         EnumSet<DispatcherType> disps = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.ASYNC);
-        initMetrics(servletContext, disps);
+        /*initMetrics(servletContext, disps);*/
         if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
-            initCachingHttpHeadersFilter(servletContext, disps);
+            /*initCachingHttpHeadersFilter(servletContext, disps);*/
         }
         if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
-            initH2Console(servletContext);
+            /*initH2Console(servletContext);*/
         }
         log.info("Web application fully configured");
     }
@@ -71,9 +70,7 @@ public class WebConfigurer implements ServletContextInitializer {
         return extractedPath.substring(0, extractionEndIndex);
     }
 
-    /**
-     * Initializes the caching HTTP Headers Filter.
-     */
+
     private void initCachingHttpHeadersFilter(ServletContext servletContext,
                                               EnumSet<DispatcherType> disps) {
         log.debug("Registering Caching HTTP Headers Filter");
@@ -86,10 +83,7 @@ public class WebConfigurer implements ServletContextInitializer {
         cachingHttpHeadersFilter.setAsyncSupported(true);
     }
 
-    /**
-     * Initializes Metrics.
-     */
-    private void initMetrics(ServletContext servletContext, EnumSet<DispatcherType> disps) {
+   /* private void initMetrics(ServletContext servletContext, EnumSet<DispatcherType> disps) {
         log.debug("Initializing Metrics registries");
         servletContext.setAttribute(InstrumentedFilter.REGISTRY_ATTRIBUTE,
             metricRegistry);
@@ -100,7 +94,7 @@ public class WebConfigurer implements ServletContextInitializer {
         FilterRegistration.Dynamic metricsFilter = servletContext.addFilter("webappMetricsFilter",
             new InstrumentedFilter());
 
-        metricsFilter.addMappingForUrlPatterns(disps, true, "/*");
+        metricsFilter.addMappingForUrlPatterns(disps, true, "/admin/*");
         metricsFilter.setAsyncSupported(true);
 
         log.debug("Registering Metrics Servlet");
@@ -110,7 +104,7 @@ public class WebConfigurer implements ServletContextInitializer {
         metricsAdminServlet.addMapping("/management/metrics/*");
         metricsAdminServlet.setAsyncSupported(true);
         metricsAdminServlet.setLoadOnStartup(2);
-    }
+    }*/
 
     @Bean
     public CorsFilter corsFilter() {
@@ -124,9 +118,6 @@ public class WebConfigurer implements ServletContextInitializer {
         return new CorsFilter(source);
     }
 
-    /**
-     * Initializes H2 console.
-     */
     private void initH2Console(ServletContext servletContext) {
         log.debug("Initialize H2 console");
         ServletRegistration.Dynamic h2ConsoleServlet = servletContext.addServlet("H2Console", new org.h2.server.web.WebServlet());
@@ -135,8 +126,8 @@ public class WebConfigurer implements ServletContextInitializer {
         h2ConsoleServlet.setLoadOnStartup(1);
     }
 
-    @Autowired(required = false)
+    /*@Autowired(required = false)
     public void setMetricRegistry(MetricRegistry metricRegistry) {
         this.metricRegistry = metricRegistry;
-    }
+    }*/
 }

@@ -1,16 +1,29 @@
 package com.experts.core.biller.statemachine.api.activemq.standers.config;
 
+import co.qyef.starter.firebase.config.DatabaseConfigurationStarter;
+import co.qyef.starter.firebase.creator.AsyncConfiguration;
 import com.atomikos.jdbc.AtomikosDataSourceBean;
 import com.atomikos.jms.AtomikosConnectionFactoryBean;
 import com.mysql.cj.jdbc.MysqlXADataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import io.github.jhipster.config.JHipsterConstants;
+import io.github.jhipster.config.liquibase.AsyncSpringLiquibase;
+import liquibase.integration.spring.SpringLiquibase;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.artemis.jms.client.ActiveMQXAConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.broker.TransportConnector;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.postgresql.xa.PGXADataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.context.annotation.*;
+import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -34,14 +47,19 @@ import java.util.concurrent.ConcurrentHashMap;
 @EnableJpaRepositories(basePackages = {"com.experts.core.biller.statemachine.api.gigaspace.daos.repo"})
 @EnableJpaAuditing
 @EnableTransactionManagement
-public class CustomerConfig {
 
+public class CustomerConfig {
+    private final Logger log = LoggerFactory.getLogger(DatabaseConfigurationStarter.class);
     @Autowired
     private JpaVendorAdapter jpaVendorAdapter;
 
+
+    @Autowired
+    private  Environment env;
+
     @Bean
     @Primary
-    public DataSource dataSource() throws SQLException {
+    public DataSource dataSourceOps() throws SQLException {
         MysqlXADataSource mysqlXaDataSource = new MysqlXADataSource();
         mysqlXaDataSource.setURL("jdbc:mysql://localhost:3306/pdpserver?serverTimezone=UTC");
         mysqlXaDataSource.setUser("root");
@@ -106,8 +124,8 @@ public class CustomerConfig {
         HashMap<String, Object> properties = new HashMap<String, Object>();
         properties.put("hibernate.transaction.jta.platform", AtomikFactoryBean.class.getName());
         properties.put("javax.persistence.transactionType", "JTA");
-        build.setJtaDataSource(dataSource());
-        build.setJpaVendorAdapter(hibernateJpaVendorAdapter);
+        build.setJtaDataSource(dataSourceOps());
+        build.setJpaVendorAdapter(hibernateJpaVendorAdapter());
         return build;
     }
 
@@ -117,5 +135,30 @@ public class CustomerConfig {
         jpaAdapter.setShowSql(true);
         return jpaAdapter;
     }
+
+    @Bean
+    public DataSource dataSource() throws SQLException{
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName("com.mysql.jdbc.Driver");
+        hikariConfig.setJdbcUrl("jdbc:mysql://localhost:3306/pdpserver?serverTimezone=UTC");
+        hikariConfig.setUsername("root");
+        hikariConfig.setPassword("opc@2018");
+        hikariConfig.setDataSource(dataSourceOps());
+        hikariConfig.setMaximumPoolSize(5);
+        hikariConfig.setConnectionTestQuery("SELECT 1");
+        hikariConfig.setPoolName("springHikariCP");
+
+        hikariConfig.addDataSourceProperty("dataSource.cachePrepStmts", "true");
+        hikariConfig.addDataSourceProperty("dataSource.prepStmtCacheSize", "250");
+        hikariConfig.addDataSourceProperty("dataSource.prepStmtCacheSqlLimit", "2048");
+        hikariConfig.addDataSourceProperty("dataSource.useServerPrepStmts", "true");
+
+        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
+
+        return dataSource;
+    }
+
+
+
 
 }

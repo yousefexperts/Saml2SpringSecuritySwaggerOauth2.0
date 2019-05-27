@@ -1,5 +1,6 @@
 package com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine;
 
+import com.experts.core.biller.statemachine.api.model.domain.jpa.AbstractEntity;
 import com.experts.core.biller.statemachine.api.model.domain.jpa.UsersCore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,12 +24,8 @@ import java.util.UUID;
 @Data
 @Builder
 @Cache(usage =  CacheConcurrencyStrategy.TRANSACTIONAL , region = "com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.ItemClassification")
-public class ItemClassification implements Serializable {
+public class ItemClassification extends AbstractEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name="uuid", strategy="uuid2")
-    private UUID id;
 
     @Column(name  = "item_color" , nullable = false)
     private String color;
@@ -58,75 +55,4 @@ public class ItemClassification implements Serializable {
     private Items items;
 
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public UsersCore getUsersCore() {
-        return usersCore;
-    }
-
-    public void setUsersCore(UsersCore usersCore) {
-        this.usersCore = usersCore;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    public Items getItems() {
-        return items;
-    }
-
-    public void setItems(Items items) {
-        this.items = items;
-    }
 }

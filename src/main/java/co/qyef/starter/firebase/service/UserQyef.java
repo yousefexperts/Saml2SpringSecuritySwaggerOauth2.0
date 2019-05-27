@@ -13,40 +13,41 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 
-@Service
+@Service("usereQyef")
+@Component("usereQyef")
 @Transactional
-public class UserService {
+public class UserQyef {
 
-    private final Logger log = LoggerFactory.getLogger(UserService.class);
+    private final Logger log = LoggerFactory.getLogger(UserQyef.class);
 
-    @Inject
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Inject
+    @Autowired
     private UserRepository userRepository;
 
-    @Inject
+    @Autowired
     private PersistentTokenRepository persistentTokenRepository;
 
-    @Inject
+    @Autowired
     private AuthorityRepository authorityRepository;
 
     public User activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
         User user = userRepository.getUserByActivationKey(key);
 
-        // activate given user for the registration key.
         if (user != null) {
             user.setActivated(true);
             user.setActivationKey(null);
@@ -63,15 +64,15 @@ public class UserService {
         Set<Authority> authorities = new HashSet<>();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(login);
-        // new user gets initially a generated password
+
         newUser.setPassword(encryptedPassword);
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setEmail(email);
         newUser.setLangKey(langKey);
-        // new user is not active
+
         newUser.setActivated(false);
-        // new user gets registration key
+
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
         newUser.setAuthorities(authorities);
@@ -104,33 +105,18 @@ public class UserService {
         return currentUser;
     }
 
-    /**
-     * Persistent Token are used for providing automatic authentication, they should be automatically deleted after
-     * 30 days.
-     * <p/>
-     * <p>
-     * This is scheduled to get fired everyday, at midnight.
-     * </p>
-     */
     @Scheduled(cron = "0 0 0 * * ?")
     public void removeOldPersistentTokens() {
         LocalDate now = new LocalDate();
         List<PersistentToken> tokens = persistentTokenRepository.findByTokenDateBefore(now.minusMonths(1));
         for (PersistentToken token : tokens) {
-            log.debug("Deleting token {}", token.getSeries());
+            log.debug("Deleting token {}", token.getId());
             User user = token.getUser();
             user.getPersistentTokens().remove(token);
             persistentTokenRepository.delete(token);
         }
     }
 
-    /**
-     * Not activated users should be automatically deleted after 3 days.
-     * <p/>
-     * <p>
-     * This is scheduled to get fired everyday, at 01:00 (am).
-     * </p>
-     */
     @Scheduled(cron = "0 0 1 * * ?")
     public void removeNotActivatedUsers() {
         DateTime now = new DateTime();

@@ -9,10 +9,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import java.time.Instant;
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
+
+import java.time.LocalDate;
+import javax.persistence.*;
 
 
 @MappedSuperclass
@@ -30,7 +29,7 @@ public abstract class AbstractAuditingEntityCore implements Serializable {
     @CreatedDate
     @Column(name = "created_date", nullable = false)
     @JsonIgnore
-    private Instant createdDate = Instant.now();
+    private LocalDate createdDate = LocalDate.now();
 
     @LastModifiedBy
     @Column(name = "last_modified_by", length = 50)
@@ -40,7 +39,11 @@ public abstract class AbstractAuditingEntityCore implements Serializable {
     @LastModifiedDate
     @Column(name = "last_modified_date")
     @JsonIgnore
-    private Instant lastModifiedDate = Instant.now();
+    private LocalDate lastModifiedDate = LocalDate.now();
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     public String getCreatedBy() {
         return createdBy;
@@ -50,11 +53,20 @@ public abstract class AbstractAuditingEntityCore implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public Instant getCreatedDate() {
+    public LocalDate getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(LocalDate lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Instant createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -66,11 +78,5 @@ public abstract class AbstractAuditingEntityCore implements Serializable {
         this.lastModifiedBy = lastModifiedBy;
     }
 
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
 
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
 }

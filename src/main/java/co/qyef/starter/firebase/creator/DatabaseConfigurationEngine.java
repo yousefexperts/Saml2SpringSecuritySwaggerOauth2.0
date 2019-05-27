@@ -23,7 +23,7 @@ import java.sql.SQLException;
 @Configuration
 @EnableJpaAuditing
 @EnableTransactionManagement
-@Import({AsyncConfiguration.class , LiquibaseProperties.class})
+@Import({AsyncConfiguration.class })
 public class DatabaseConfigurationEngine {
 
     private final Logger log = LoggerFactory.getLogger(DatabaseConfigurationEngine.class);
@@ -42,23 +42,4 @@ public class DatabaseConfigurationEngine {
         return Server.createTcpServer("-tcp", "-tcpAllowOthers");
     }
 
-    @Bean(name  = "liquibaseEngine")
-    public SpringLiquibase liquibase( TaskExecutor taskExecutor,
-                                     DataSource dataSource, LiquibaseProperties liquibaseProperties) {
-
-        // Use liquibase.integration.spring.SpringLiquibase if you don't want Liquibase to start asynchronously
-        SpringLiquibase liquibase = new AsyncSpringLiquibase(taskExecutor, env);
-        liquibase.setDataSource(dataSource);
-        liquibase.setChangeLog("classpath:config/liquibase/master.xml");
-        liquibase.setContexts(liquibaseProperties.getContexts());
-        liquibase.setDefaultSchema(liquibaseProperties.getDefaultSchema());
-        liquibase.setDropFirst(liquibaseProperties.isDropFirst());
-        if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_NO_LIQUIBASE)) {
-            liquibase.setShouldRun(false);
-        } else {
-            liquibase.setShouldRun(liquibaseProperties.isEnabled());
-            log.debug("Configuring Liquibase");
-        }
-        return liquibase;
-    }
 }

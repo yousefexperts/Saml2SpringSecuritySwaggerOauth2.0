@@ -5,15 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-/**
- * This filter is used in production, to put HTTP cache headers with a long (1 month) expiration time.
- * </p>
- */
+
 public class CachingHttpHeadersFilter implements Filter {
 
-
     private final static long CACHE_PERIOD = TimeUnit.DAYS.toMillis(31L);
-
 
     private final static long LAST_MODIFIED = System.currentTimeMillis();
 

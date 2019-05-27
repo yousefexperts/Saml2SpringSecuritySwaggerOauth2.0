@@ -13,6 +13,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @RevisionEntity(EntityRevisionListener_.class)
@@ -20,8 +21,8 @@ import java.util.List;
 @SpaceClass
 public class CustomTrackingEntity extends DefaultRevisionEntity {
     @Id
-    @GeneratedValue
-    private int customId;
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    private Long clazz;
 
     @Column(name  = "username" , nullable = false)
     private String username;
@@ -49,37 +50,7 @@ public class CustomTrackingEntity extends DefaultRevisionEntity {
 
 
 
-    public int getCustomId() {
-        return customId;
-    }
 
-    public void setCustomId(int customId) {
-        this.customId = customId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEntityName() {
-        return entityName;
-    }
-
-    public void setEntityName(String entityName) {
-        this.entityName = entityName;
-    }
-
-    public List<CustomRevisionEntity> getModifiedEntityTypes() {
-        return modifiedEntityTypes;
-    }
-
-    public void setModifiedEntityTypes(List<CustomRevisionEntity> modifiedEntityTypes) {
-        this.modifiedEntityTypes = modifiedEntityTypes;
-    }
 
 
 }

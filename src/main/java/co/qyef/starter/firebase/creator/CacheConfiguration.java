@@ -1,7 +1,7 @@
 package co.qyef.starter.firebase.creator;
 
 import com.gismat.test.domain.AuthorityCore;
-import com.gismat.test.domain.UserSysCoreDll;
+import com.gismat.test.domain.UserSysCoreQyef;
 import io.github.jhipster.config.JHipsterProperties;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
@@ -32,7 +32,7 @@ public class CacheConfiguration {
         jcacheConfiguration = Eh107Configuration.fromEhcacheCacheConfiguration(
             CacheConfigurationBuilder.newCacheConfigurationBuilder(Object.class, Object.class,
                 ResourcePoolsBuilder.heap(ehcache.getMaxEntries()))
-                .withExpiry(Expirations.timeToLiveExpiration(Duration.of(ehcache.getTimeToLiveSeconds(), TimeUnit.SECONDS)))
+                .withExpiry(Expirations.timeToLiveExpiration(Duration.of(ehcache.getTimeToLiveSeconds(), TimeUnit.HOURS)))
                 .build());
     }
 
@@ -40,9 +40,9 @@ public class CacheConfiguration {
     public JCacheManagerCustomizer cacheManagerCustomizer() {
         return cm -> {
             cm.createCache("users", jcacheConfiguration);
-            cm.createCache(UserSysCoreDll.class.getName(), jcacheConfiguration);
+            cm.createCache(UserSysCoreQyef.class.getName(), jcacheConfiguration);
             cm.createCache(AuthorityCore.class.getName(), jcacheConfiguration);
-            cm.createCache(UserSysCoreDll.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(UserSysCoreQyef.class.getName() + ".authorities", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -1,6 +1,11 @@
 package co.qyef.starter.firebase.domain;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,11 +14,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-/**
- * An authority (a security role) used by Spring Security.
- */
+
 @Entity
 @Table(name = "T_AUTHORITY")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
 public class Authority implements Serializable {
 
     @NotNull

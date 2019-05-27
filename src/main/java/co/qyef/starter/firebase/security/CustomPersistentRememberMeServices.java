@@ -25,11 +25,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.UUID;
 
 
 @Service
-public class CustomPersistentRememberMeServices extends
-        AbstractRememberMeServices {
+public class CustomPersistentRememberMeServices extends AbstractRememberMeServices {
 
     private final Logger log = LoggerFactory.getLogger(CustomPersistentRememberMeServices.class);
 
@@ -65,7 +65,7 @@ public class CustomPersistentRememberMeServices extends
         String login = token.getUser().getLogin();
 
 
-        log.debug("Refreshing persistent login token for user '{}', series '{}'", login, token.getSeries());
+        log.debug("Refreshing persistent login token for user '{}', series '{}'", login, token.getId());
         token.setTokenDate(new LocalDate());
         token.setTokenValue(generateTokenData());
         token.setIpAddress(request.getRemoteAddr());
@@ -88,7 +88,7 @@ public class CustomPersistentRememberMeServices extends
         User user = userRepository.getOne(login);
 
         PersistentToken token = new PersistentToken();
-        token.setSeries(generateSeriesData());
+        /*token.setId(UUID.randomUUID());*/
         token.setUser(user);
         token.setTokenValue(generateTokenData());
         token.setTokenDate(new LocalDate());
@@ -165,7 +165,7 @@ public class CustomPersistentRememberMeServices extends
 
     private void addCookie(PersistentToken token, HttpServletRequest request, HttpServletResponse response) {
         setCookie(
-                new String[]{token.getSeries(), token.getTokenValue()},
+                new String[]{token.getId().toString(), token.getTokenValue()},
                 TOKEN_VALIDITY_SECONDS, request, response);
     }
 }
