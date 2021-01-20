@@ -202,7 +202,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hadoop.version>2.6.0</hadoop.version>
         <camel.version>2.24.0</camel.version>
-        <fasterxml.version>2.9.0</fasterxml.version>
+        <fasterxml.version>2.12.1</fasterxml.version>
         <javax-el.version>2.2.5</javax-el.version>
         <javax.el-api.version>2.2.5</javax.el-api.version>
         <json.version>20170516</json.version>
@@ -3303,21 +3303,21 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.4</version>
+            <version>2.12.1</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.9.4</version>
+            <version>2.12.1</version>
         </dependency>
 
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.9.5</version>
+            <version>2.12.1</version>
         </dependency>
 
         <dependency>
